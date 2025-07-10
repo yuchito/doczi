@@ -11,6 +11,7 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-template-dialog',
@@ -28,6 +29,8 @@ import {
   styleUrl: './template-dialog.scss',
 })
 export class TemplateDialog {
+  readonly API_BASE_URL = environment.apiBaseUrl;
+
   private fb = inject(FormBuilder);
   private http = inject(HttpClient);
   protected dialogRef = inject(MatDialogRef<TemplateDialog>);
@@ -65,9 +68,8 @@ export class TemplateDialog {
     if (formValue.file) formData.append('file', formValue.file);
 
     const template = this.data;
-    const url = template ? `http://localhost:3000/templates/${template.id}` : `http://localhost:3000/templates/upload`;
-    const method = template ? 'patch' : 'post';
-
+    const endpoint = template ? `/templates/${template.id}` : `/templates/upload`;
+    const url = `${this.API_BASE_URL}${endpoint}`;    const method = template ? 'patch' : 'post';
     this.http[method](url, formData, {
       headers: new HttpHeaders({Authorization: `Bearer ${this.token}`})
     }).subscribe({
