@@ -9,6 +9,7 @@ export const appRoutes: Routes = [
     component: AuthLayout,
     children: [
       { path: 'login', component: Login },
+      { path: '', redirectTo: 'login', pathMatch: 'full' }, // root redirects to login
     ],
   },
   {
@@ -19,6 +20,5 @@ export const appRoutes: Routes = [
       { path: 'templates', loadComponent: () => import('./pages/templates/templates').then(m => m.Templates) },
     ],
   },
-  {path: '**', redirectTo: 'login', pathMatch: 'full'},
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '**', redirectTo: 'login', pathMatch: 'full' },
 ];
