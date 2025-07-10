@@ -11,6 +11,7 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/doczi",
+        "outputMode": "static",
         "index": "apps/doczi/src/index.html",
         "main": "apps/doczi/src/main.ts",
         "polyfills": ["zone.js"],
