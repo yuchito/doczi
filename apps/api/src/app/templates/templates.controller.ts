@@ -14,6 +14,7 @@ import { CreateTemplateDto } from './dto/create-template.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
+import { UPLOADS_PATH } from '../constants';
 
 @Controller('templates')
 export class TemplatesController {
@@ -23,7 +24,7 @@ export class TemplatesController {
     @UseInterceptors(
         FileInterceptor('file', {
             storage: diskStorage({
-                destination: './uploads/templates',
+                destination: UPLOADS_PATH,
                 filename: (req, file, cb) => {
                     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
                     const ext = extname(file.originalname);
