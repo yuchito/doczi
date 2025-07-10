@@ -4,6 +4,7 @@ import { AppModule } from './app/app.module';
 import { PrismaService } from './prisma.service';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import * as bcrypt from 'bcryptjs';
+import { existsSync, mkdirSync } from 'fs';
 
 async function bootstrap() {
   // create app as NestExpressApplication for static assets & cors
@@ -23,6 +24,11 @@ async function bootstrap() {
       },
     });
     console.log('Admin user created: admin@example.com / 1234');
+  }
+
+  const uploadPath = 'uploads/templates';
+  if (!existsSync(uploadPath)) {
+    mkdirSync(uploadPath, { recursive: true });
   }
 
   // serve static assets folder uploads/templates on /templates/files URL

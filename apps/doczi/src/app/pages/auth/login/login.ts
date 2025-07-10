@@ -6,6 +6,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +27,7 @@ export class Login {
   private router = inject(Router);
   private snackBar = inject(MatSnackBar);
 
-  readonly API_BASE_URL = 'http://localhost:3000';
+  readonly API_BASE_URL = environment.apiBaseUrl;
 
   loginForm = this.fb.nonNullable.group({
     email: ['', [Validators.required]],

@@ -7,6 +7,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatInputModule } from "@angular/material/input";
 import { MatCardModule } from "@angular/material/card";
 import { MatSelectModule } from "@angular/material/select";
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-wizard',
@@ -22,7 +23,7 @@ import { MatSelectModule } from "@angular/material/select";
 })
 export class Wizard implements OnInit {
 
-  readonly API_BASE_URL = 'http://localhost:3000';
+  readonly API_BASE_URL = environment.apiBaseUrl;
 
   private http = inject(HttpClient);
   private snackBar = inject(MatSnackBar);

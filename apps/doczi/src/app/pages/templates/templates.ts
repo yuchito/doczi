@@ -10,6 +10,7 @@ import { MatCard } from "@angular/material/card";
 import { MatIcon } from "@angular/material/icon";
 import { MatChip } from "@angular/material/chips";
 import { MatButtonModule } from "@angular/material/button";
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-templates',
@@ -31,8 +32,7 @@ export class Templates implements OnInit {
   templates = signal<any[]>([]);
   dataSource = computed(() => new MatTableDataSource(this.templates()));
   displayedColumns = ['name', 'description', 'type', 'actions'];
-  API_URL = 'http://localhost:3000/templates';
-  readonly API_BASE_URL = 'http://localhost:3000';
+  readonly API_BASE_URL = environment.apiBaseUrl;
 
   token = localStorage.getItem('token') ?? '';
 
@@ -41,7 +41,7 @@ export class Templates implements OnInit {
   }
 
   fetchTemplates() {
-    this.http.get<any[]>(this.API_URL, { headers: this.authHeader() })
+    this.http.get<any[]>(`${this.API_BASE_URL}/templates`, { headers: this.authHeader() })
       .subscribe(res => this.templates.set(res));
   }
 
