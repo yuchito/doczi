@@ -1,0 +1,10 @@
+{
+  "name": "doczi-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/doczi-e2e/src",
+  "tags": [],
+  "implicitDependencies": ["doczi"],
+  "// targets": "to see all targets run: nx show project doczi-e2e --web",
+  "targets": {}
+}
