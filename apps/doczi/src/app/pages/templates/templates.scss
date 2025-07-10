@@ -1,0 +1,44 @@
+.templates-wrapper {
+  max-width: 900px;
+  margin: auto;
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+
+  h2 {
+    margin: 0;
+  }
+}
+
+.add-btn {
+  margin-bottom: 16px;
+}
+
+mat-card {
+  padding: 16px;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  min-width: 600px;
+}
+
+mat-chip {
+  &.mat-primary {
+    background-color: #1976d2;
+    color: white !important;
+  }
+  &.mat-warn {
+    background-color: #d32f2f;
+    color: white !important;
+  }
+  &.mat-accent {
+    background-color: purple;
+    color: white !important;
+  }
+}

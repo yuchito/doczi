@@ -1,0 +1,38 @@
+<h2 mat-dialog-title>{{ data ? 'Modifier' : 'Ajouter' }} un modèle</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" (ngSubmit)="saveTemplate()" class="form">
+
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Nom</mat-label>
+      <input matInput formControlName="name" required />
+    </mat-form-field>
+
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Type</mat-label>
+      <mat-select formControlName="type" required>
+        <mat-option value="docx">Word</mat-option>
+        <mat-option value="pdf">PDF</mat-option>
+        <mat-option value="psd">Photoshop</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="file-upload">
+      <button mat-raised-button color="primary" type="button" (click)="fileInput.click()">
+        Sélectionner un fichier
+      </button>
+      <input type="file" #fileInput hidden (change)="handleFileChange($event)" />
+      @if (form.value.file) {
+        <div class="file-name">
+          Fichier sélectionné : {{ form.value.file.name }}
+        </div>
+      }
+    </div>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="dialogRef.close()">Annuler</button>
+  <button mat-flat-button color="primary" (click)="saveTemplate()">Enregistrer</button>
+</mat-dialog-actions>

@@ -1,0 +1,161 @@
+@if (!uploadSuccess()) {
+  <div class="step upload-form">
+    <h2>Génération de documents</h2>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Mode</mat-label>
+      <mat-select
+        [value]="form.value.mode"
+        (selectionChange)="form.patchValue({ mode: $event.value })"
+      >
+        <mat-option value="bulk">Génération en masse</mat-option>
+        <mat-option value="single">Générer un seul</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Type de document</mat-label>
+      <mat-select
+        [value]="form.value.docType"
+        (selectionChange)="form.patchValue({ docType: $event.value })"
+      >
+        @for (t of templates(); track t.id) {
+          <mat-option [value]="t.id">{{ t.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    @if (form.value.mode === 'single') {
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Prénom</mat-label>
+        <input
+          matInput
+          value="{{ form.value.firstName }}"
+          (input)="form.patchValue({ firstName: $any($event.target).value })"
+          placeholder="Prénom"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Nom</mat-label>
+        <input
+          matInput
+          value="{{ form.value.lastName }}"
+          (input)="form.patchValue({ lastName: $any($event.target).value })"
+          placeholder="Nom"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          value="{{ form.value.email }}"
+          (input)="form.patchValue({ email: $any($event.target).value })"
+          placeholder="Email"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Classe</mat-label>
+        <input
+          matInput
+          value="{{ form.value.grade }}"
+          (input)="form.patchValue({ grade: $any($event.target).value })"
+          placeholder="Classe"
+        />
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" (click)="generateOne()">
+        Générer
+      </button>
+    }
+    @else {
+      <button mat-stroked-button type="button" (click)="fileInput.click()">
+        Choisir un fichier
+      </button>
+      <input
+        #fileInput
+        type="file"
+        hidden
+        (change)="handleFileChange($event)"
+        accept=".csv"
+      />
+      @if (form.value.file) {
+        <span>Fichier : {{ form.value.file.name }}</span>
+      }
+      <div>
+        <button mat-raised-button color="primary" (click)="upload()">
+          Importer CSV
+        </button>
+      </div>
+    }
+  </div>
+}
+@else {
+  <div class="step table-view">
+    <div class="header">
+      <mat-form-field appearance="outline">
+        <mat-label>Rechercher</mat-label>
+        <input
+          matInput
+          #searchInput
+          (input)="handleSearch($any(searchInput).value)"
+        />
+      </mat-form-field>
+
+      <button mat-flat-button color="accent" (click)="downloadAll()">
+        Télécharger tout (ZIP)
+      </button>
+    </div>
+
+    <mat-card>
+      <table mat-table [dataSource]="dataSource()" class="mat-elevation-z1">
+        <ng-container matColumnDef="firstName">
+          <th mat-header-cell *matHeaderCellDef>Prénom</th>
+          <td mat-cell *matCellDef="let s">{{ s.firstName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="lastName">
+          <th mat-header-cell *matHeaderCellDef>Nom</th>
+          <td mat-cell *matCellDef="let s">{{ s.lastName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>Email</th>
+          <td mat-cell *matCellDef="let s">{{ s.email }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="grade">
+          <th mat-header-cell *matHeaderCellDef>Classe</th>
+          <td mat-cell *matCellDef="let s">{{ s.grade }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let s">
+            <button mat-button (click)="previewStudent.set(s)">Aperçu</button>
+            <button mat-raised-button color="primary" (click)="downloadOne(s)">
+              Télécharger
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="['firstName', 'lastName', 'email', 'grade', 'actions']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['firstName', 'lastName', 'email', 'grade', 'actions']"></tr>
+      </table>
+    </mat-card>
+  </div>
+}
+
+<!-- if mode = single => directly preview -->
+<!-- if mode = bulk => table then choose student to preview -->
+
+@if(previewStudent()) {
+  <ng-template>
+    Hello pdf student!
+<!--    <mat-dialog-container>-->
+<!--      <app-pdf-preview [student]="previewStudent()"></app-pdf-preview>-->
+<!--    </mat-dialog-container>-->
+  </ng-template>
+}

@@ -1,0 +1,35 @@
+<mat-sidenav-container class="sidenav-container" [dir]="direction()">
+  <mat-sidenav mode="side" opened>
+    <mat-toolbar color="primary" class="sidenav-header">Doczi</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/wizard" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+        {{ language() === 'fr' ? 'Générer document' : 'إنشاء وثيقة' }}
+      </a>
+      <a mat-list-item routerLink="/templates" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+        {{ language() === 'fr' ? 'Modèles' : 'نماذج' }}
+      </a>
+    </mat-nav-list>
+
+    <div class="logout-container">
+      <button mat-button color="warn" (click)="logout()">{{ language() === 'fr' ? 'Déconnexion' : 'تسجيل الخروج' }}</button>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" class="main-toolbar">
+      <span>Doczi Admin</span>
+      <span class="spacer"></span>
+
+      <mat-form-field appearance="fill" class="language-select" style="width: 120px;">
+        <mat-select [value]="language()" (selectionChange)="changeLanguage($event.value)">
+          <mat-option value="fr">Français</mat-option>
+          <mat-option value="ar">العربية</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-toolbar>
+
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>Confirmation de suppression</h2>
+
+<mat-dialog-content>
+  <p>Êtes-vous sûr de vouloir supprimer ce modèle ? Cette action est irréversible.</p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="dialogRef.close()">Annuler</button>
+  <button mat-flat-button color="warn" (click)="delete()">Supprimer</button>
+</mat-dialog-actions>

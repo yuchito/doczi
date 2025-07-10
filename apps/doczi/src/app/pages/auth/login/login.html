@@ -1,0 +1,33 @@
+<div class="login-wrapper">
+  <mat-card>
+    <h2>Doczi</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email" autocomplete="email" />
+        @if (emailControl().hasError('required')) {
+          <mat-hint>Email requis</mat-hint>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Mot de passe</mat-label>
+        <input matInput formControlName="password" type="password" autocomplete="current-password" />
+        @if (passwordControl().hasError('required')) {
+          <mat-hint>Mot de passe requis</mat-hint>
+        }
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        class="full-width"
+        [disabled]="loading()"
+      >
+        {{ loading() ? 'Connexion...' : 'Connexion' }}
+      </button>
+    </form>
+  </mat-card>
+</div>

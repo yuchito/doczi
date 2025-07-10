@@ -1,1 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
+$typography-config: (
+  plain-family: '"Roboto Condensed", Arial, sans-serif',
+  brand-family: '"Roboto Condensed", Arial, sans-serif',
+  bold-weight: 700,
+  medium-weight: 500,
+  regular-weight: 400,
+);
+
+html {
+  @include mat.theme((
+    color: mat.$azure-palette,
+    typography: $typography-config,
+    density: 0
+  ))
+}
